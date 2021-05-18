@@ -18,7 +18,7 @@ namespace CoffeeShop.Core
         private int _totalLoyaltyPointsAccrued = 0;
         private int _totalLoyaltyPointsRedeemed = 0;
         private int _totalCupsSold = 0;
-        private List<Customer> _customers;
+        private readonly List<Customer> _customers;
 
         public CoffeeShop()
         {
@@ -59,6 +59,13 @@ namespace CoffeeShop.Core
                         UpdateShopAccount(employee);
                         if (!employee.CanRedeemFreeDrink() || _profit >= 50)
                             _incomeFromDrinks += employee.DrinksPurchased[0].BasePrice;
+                        break;
+                    case CustomerType.DiscountedCustomer:
+                        if (_coffeeBeansCount < BEANS_PER_CUP) break;
+                        var discountedCustomer = customer as DiscountedCustomer;
+                        UpdateShopAccount(discountedCustomer);
+                        var price = discountedCustomer.DrinksPurchased[0].BasePrice;
+                        _incomeFromDrinks += discountedCustomer.GetDiscountedPrice(price);
                         break;
                     default:
                         if (_coffeeBeansCount < BEANS_PER_CUP) break;

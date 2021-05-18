@@ -17,12 +17,13 @@ namespace CoffeeShop.Core.Tests.Models
         public void AddLoyaltyPoints_LoyaltyPointsAdded()
         {
             // Arrange
-            var loyaltyMember = LoyaltyMember.Create("");
+            var loyaltyMember = LoyaltyMember.Create("customer");
 
             // Act
             loyaltyMember.AddLoyaltyPoints(5);
             loyaltyMember.AddLoyaltyPoints(10);
             loyaltyMember.AddLoyaltyPoints(-5);
+            loyaltyMember.AddLoyaltyPoints(-15);
 
             // Assert
             Assert.AreEqual(10, loyaltyMember.LoyaltyPoints);
@@ -33,7 +34,7 @@ namespace CoffeeShop.Core.Tests.Models
         public void SetUsingLoyaltyPoints_Sets(bool useLoyaltyPoints)
         {
             // Arrange
-            var loyaltyMember = LoyaltyMember.Create("");
+            var loyaltyMember = LoyaltyMember.Create("customer");
 
             // Act
             loyaltyMember.ShouldUseLoyaltyPoints(useLoyaltyPoints);
